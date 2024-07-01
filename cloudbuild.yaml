@@ -9,8 +9,7 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gke-deploy'
     args: ['run', 
-           '--filename=deployment.yaml',		
-           '--image=europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:v1', 
+           '--filename=deployment.yaml',		 
            '--location=us-west4-a',  
            '--cluster=my-first-cluster']
 
