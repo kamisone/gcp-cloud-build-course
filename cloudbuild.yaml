@@ -2,18 +2,19 @@ steps:
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-           'europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:$SHORT_SHA', '.']
+           'europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:v1', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:$SHORT_SHA']
+    args: ['push',  'europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:v1']
 
   - name: google/cloud-sdk
-    args: ['gcloud', 'run', 'deploy', 'hello-world-python', 
-           '--image=europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:$SHORT_SHA', 
-           '--region', 'us-central1', '--platform', 'managed', 
-           '--allow-unauthenticated']
+    args: ['run', 
+           '--filename=deployment.yaml',		
+           '--image=europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:v1', 
+           '--location=us-central1',  
+           '--cluster=my-first-cluster']
 
 images:
-  - europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:$SHORT_SHA
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/my-firsts-artifact-registry/hello-world-python:v1
 options:
   logging: CLOUD_LOGGING_ONLY
